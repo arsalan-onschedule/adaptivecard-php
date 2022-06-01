@@ -12,7 +12,7 @@ class Card implements JsonSerializable{
     protected $type;
     protected $version;
 
-    public function __construct($elements = [], $schema = null, $version = "")
+    public function __construct($elements = [], $schema = null, $version = null)
     {
         $this->schema = $schema ?? "http://adaptivecards.io/schemas/adaptive-card.json";
         $this->type =  "AdaptiveCard";
@@ -38,14 +38,10 @@ class Card implements JsonSerializable{
 
     public function jsonSerialize(){
         return [
-            "attachments" => [
-                [
                     '$schema' => $this->schema,
                     "type" => $this->type,
                     "version" => $this->version,
                     "body" => $this->getElements()
-                ]
-            ]
         ];
     }
 }
