@@ -33,7 +33,6 @@ class OpenUrl extends BaseAction implements JsonSerializable
             "type" => $this->getType(),
             "title" => $this->getTitle(),
             "style" => $this->getStyle(),
-            "iconUrl" => $this->getIconUrl(),
             "url" => $this->getUrl()
         ];
     }
