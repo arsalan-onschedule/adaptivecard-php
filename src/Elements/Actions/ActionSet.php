@@ -12,7 +12,14 @@ class ActionSet implements JsonSerializable{
     public function __construct($actions = [])
     {
         $this->type = "ActionSet";
-        $this->actions = $actions;
+        
+        $this->actions = [];
+        if($this->isAssoc($actions)){
+            $this->actions[] = $actions;
+        }
+        else{
+            $this->actions = array_merge($this->actions, $actions);
+        }
     }
 
     public function setType($type){
@@ -25,7 +32,13 @@ class ActionSet implements JsonSerializable{
     }
 
     public function setActions($actions){
-        $this->actions[] = $actions;
+        if($this->isAssoc($actions)){
+            $this->actions[] = $actions;
+        }
+        else{
+            $this->actions = array_merge($this->actions, $actions);
+        }
+
         return $this;
     }
 
@@ -36,7 +49,14 @@ class ActionSet implements JsonSerializable{
     public function jsonSerialize(){
         return [
             "type" => $this->getType(),
-            "actions" => [$this->getActions()]
+            "actions" => $this->getActions()
         ];
+    }
+
+    //TODO: helper function, should be placed at some other appropriate place
+    private function isAssoc(array $arr)
+    {
+    if (array() === $arr) return false;
+    return array_keys($arr) !== range(0, count($arr) - 1);
     }
 }
