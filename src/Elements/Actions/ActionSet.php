@@ -12,7 +12,7 @@ class ActionSet implements JsonSerializable{
     public function __construct($actions = [])
     {
         $this->type = "ActionSet";
-        $this->actions = $actions;
+        $this->setActions($actions);
     }
 
     public function setType($type){
@@ -25,7 +25,7 @@ class ActionSet implements JsonSerializable{
     }
 
     public function setActions($actions){
-        $this->actions[] = $actions;
+        $this->actions = is_array($actions) ? $actions : [$actions];
         return $this;
     }
 
@@ -36,7 +36,8 @@ class ActionSet implements JsonSerializable{
     public function jsonSerialize(){
         return [
             "type" => $this->getType(),
-            "actions" => [$this->getActions()]
+            "actions" => $this->getActions()
         ];
     }
+
 }
